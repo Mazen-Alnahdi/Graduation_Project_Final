@@ -20,7 +20,6 @@ class _HistoryState extends State<History> {
 
   Future<void> _fetchTransactions(String email) async {
     List<String> cardIDs = await fireStoreService.getCardID(email);
-
     List<Map<String, dynamic>> transactions = [];
     _loss=0;
     _income=0;
@@ -52,13 +51,25 @@ class _HistoryState extends State<History> {
         }
       }
     }
-
     setState(() {
       _transactions = transactions;
 
     });
   }
 
+  void changeTransactions(){
+    setState(() {
+      _showDebitTransactions = !_showDebitTransactions;
+      // Refetch transactions based on the updated state
+      if (widget.user != null) {
+        String? userEmail = widget.user!.email;
+        if (userEmail != null) {
+          _fetchTransactions(userEmail);
+        }
+      }
+    });
+
+  }
 
   @override
   void initState() {
@@ -194,19 +205,7 @@ class _HistoryState extends State<History> {
                     ),
                     IconButton(
                         icon: Icon(Icons.tune),
-                        onPressed: () {
-                          setState(() {
-                            _showDebitTransactions = !_showDebitTransactions;
-                            // Refetch transactions based on the updated state
-                            if (widget.user != null) {
-                              String? userEmail = widget.user!.email;
-                              if (userEmail != null) {
-                                _fetchTransactions(userEmail);
-                              }
-                            }
-                          });
-
-                        },)
+                        onPressed: changeTransactions ,)
                   ],
                 ),
 
@@ -248,111 +247,6 @@ class _HistoryState extends State<History> {
                           ]),
                     );
                   }).toList(),
-
-
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-                  // CardTrans(
-                  //     text: "Transfer",
-                  //     accNum: "8923",
-                  //     date: "May 1 11:00AM",
-                  //     loss: false,
-                  //     number: "42.15"),
-
                 ],
               ),
               
