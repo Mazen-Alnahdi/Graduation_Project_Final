@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "841763022657",
+    "project_id": "mybank-9a723",
+    "storage_bucket": "mybank-9a723.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841763022657:android:af35be481d71772479a3c0",
+        "android_client_info": {
+          "package_name": "com.example.gp_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8fSsJvKf1zB4Vp86rEaN2kkLy-IIy_eM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841763022657:android:c64d8cdd2775135f79a3c0",
+        "android_client_info": {
+          "package_name": "com.example.gp_v2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8fSsJvKf1zB4Vp86rEaN2kkLy-IIy_eM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
