@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gp_v2/services/PicovoiceSetup.dart';
 import 'package:gp_v2/services/firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:rhino_flutter/rhino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class History extends StatefulWidget {
   final User? user;
@@ -17,6 +21,9 @@ class _HistoryState extends State<History> {
   bool _showDebitTransactions = false;
   double _loss=0;
   double _income = 0;
+  late PicovoiceSetup picovoiceSetup;
+
+
 
   Future<void> _fetchTransactions(String email) async {
     List<String> cardIDs = await fireStoreService.getCardID(email);
@@ -59,6 +66,7 @@ class _HistoryState extends State<History> {
 
   void changeTransactions(){
     setState(() {
+
       _showDebitTransactions = !_showDebitTransactions;
       // Refetch transactions based on the updated state
       if (widget.user != null) {
@@ -71,9 +79,13 @@ class _HistoryState extends State<History> {
 
   }
 
+
+
   @override
   void initState() {
     super.initState();
+
+
     if(widget.user != null) {
       String? userEmail = widget.user!.email;
       if(userEmail != null) {
@@ -81,6 +93,8 @@ class _HistoryState extends State<History> {
       }
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {

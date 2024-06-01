@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gp_v2/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gp_v2/services/PicovoiceSetup.dart';
 import 'package:gp_v2/services/firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:rhino_flutter/rhino.dart';
 
 class profilePage extends StatefulWidget {
   final User? user;
@@ -11,15 +14,28 @@ class profilePage extends StatefulWidget {
   State<profilePage> createState() => _profilePageState();
 }
 
-
-
 class _profilePageState extends State<profilePage> {
+  final ScrollController _scrollController=ScrollController();
+  late PicovoiceSetup picovoiceSetup;
+
   final _oldPasswordController=TextEditingController();
   final _newPasswordController=TextEditingController();
   final _confPasswordController=TextEditingController();
+
+  final _phrasehint1Controller=TextEditingController();
+  final _phrasehint2Controller=TextEditingController();
+  final _phrasetext1Controller=TextEditingController();
+  final _phrasetext2Controller=TextEditingController();
+
   bool _validateOldPass=false;
   bool _validateNewPass=false;
   bool _validateConfPass=false;
+
+  bool _validatephrasehint1=false;
+  bool _validatephrasehint2=false;
+  bool _validatephrasetext1=false;
+  bool _validatephrasetext2=false;
+
   String _message="";
 
   Future<String> changePassword(String email,String oldPass, String newPass, String confPass) async {
@@ -34,8 +50,8 @@ class _profilePageState extends State<profilePage> {
 
   List<Map<String,dynamic>> _UserData=[];
   final FireStoreService fireStoreService = FireStoreService();
-  bool _isVisiblePass=false;
-  bool _isVisibleInfo=false;
+  bool _isVisiblePass=true;
+  bool _isVisibleInfo=true;
 
   Future<void> _fetchUserData(String email) async {
     List<Map<String,dynamic>> document=await fireStoreService.getUserData(email);
@@ -53,15 +69,48 @@ class _profilePageState extends State<profilePage> {
         _fetchUserData(userEmail);
       }
     }
+    picovoiceSetup = Provider.of<PicovoiceSetup>(context, listen: false);
+    picovoiceSetup.onCommand = _handleCustomCommands;
   }
 
   @override
   void dispose(){
-
+    picovoiceSetup.onCommand = null;
+    _scrollController.dispose();
      _oldPasswordController.dispose();
      _newPasswordController.dispose();
      _confPasswordController.dispose();
+     _phrasehint1Controller.dispose();
+     _phrasehint2Controller.dispose();
+     _phrasetext1Controller.dispose();
+     _phrasetext2Controller.dispose();
      super.dispose();
+  }
+
+  void _handleCustomCommands (RhinoInference inference) async {
+    if(inference.intent == "scrollUp"){
+      _scrollUp();
+    } else if (inference.intent == "scrollDown") {
+      _scrollDown();
+    } else if (inference.intent == "enterPhrase1"){
+
+    }
+  }
+
+  void _scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _scrollUp() {
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
@@ -104,7 +153,7 @@ class _profilePageState extends State<profilePage> {
             ),
           ),
           body: ListView(
-            shrinkWrap: true,
+            shrinkWrap: false,
             children: [
 
               const Padding(
@@ -145,7 +194,7 @@ class _profilePageState extends State<profilePage> {
                             errorText: _validateOldPass? 'This Field cannot be empty' : null,
                             ),
                         scrollPadding: EdgeInsets.all(10.0),
-                        autofocus: true,
+                        autofocus: false,
                         textInputAction: TextInputAction.next,
                       ),
                     ),

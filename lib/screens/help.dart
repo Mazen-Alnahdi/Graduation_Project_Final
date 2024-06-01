@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gp_v2/services/PicovoiceSetup.dart';
+import 'package:provider/provider.dart';
+import 'package:rhino_flutter/rhino.dart';
 
 class Help extends StatefulWidget {
   const Help({super.key});
@@ -9,6 +12,47 @@ class Help extends StatefulWidget {
 }
 
 class _HelpState extends State<Help> {
+  final ScrollController _scrollController=ScrollController();
+  late PicovoiceSetup picovoiceSetup;
+
+  @override
+  void initState() {
+    super.initState();
+    picovoiceSetup = Provider.of<PicovoiceSetup>(context, listen: false);
+    picovoiceSetup.onCommand = _handleCustomCommands;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    picovoiceSetup.onCommand = null;
+    _scrollController.dispose();
+  }
+
+  void _handleCustomCommands (RhinoInference inference) async {
+    if(inference.intent == "scrollUp"){
+      _scrollUp();
+    } else if (inference.intent == "scrollDown") {
+      _scrollDown();
+    }
+  }
+
+  void _scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _scrollUp() {
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,6 +147,7 @@ class HelpBox extends StatelessWidget {
           child: Theme(
             data: ThemeData().copyWith(dividerColor: Colors.transparent),
             child: ExpansionTile(
+              initiallyExpanded: true,
               title: Text(headline),
               children: <Widget>[
                 Container(alignment: Alignment.centerLeft,

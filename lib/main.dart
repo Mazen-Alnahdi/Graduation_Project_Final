@@ -1,9 +1,28 @@
+
+
+
+
+
+
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:dcdg/dcdg.dart';
+
 import 'package:firebase_core/firebase_core.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:gp_v2/screens/Help.dart';
+import 'package:gp_v2/screens/account.dart';
+import 'package:gp_v2/screens/dashboard.dart';
+import 'package:gp_v2/screens/history.dart';
+import 'package:gp_v2/screens/home.dart';
+import 'package:gp_v2/screens/login.dart';
+import 'package:gp_v2/screens/profile.dart';
+import 'package:gp_v2/screens/signup.dart';
+import 'package:gp_v2/services/PicovoiceSetup.dart';
+
+import 'package:provider/provider.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 import 'package:gp_v2/screens/main_page.dart';
@@ -20,14 +39,43 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Splash Screen',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context)=>PicovoiceSetup(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context)=>MyHomePage(),
+          '/account':(context) {
+            final User? user = FirebaseAuth.instance.currentUser;
+            return Accounts(user: user);
+            },
+          '/dash':(context) {
+            final User? user = FirebaseAuth.instance.currentUser;
+            return DashBoard(user: user);
+          },
+          '/help':(context)=>Help(),
+          '/history':(context) {
+            final User? user = FirebaseAuth.instance.currentUser;
+            return History(user: user);
+          },
+          '/home':(context) {
+            final User? user = FirebaseAuth.instance.currentUser;
+            return Home(user: user);
+          },
+          '/login':(context) => Login(),
+          '/mainpage':(context) => MainPage(),
+          '/profile':(context) {
+            final User? user = FirebaseAuth.instance.currentUser;
+            return profilePage(user: user);
+          },
+          '/signup':(context) => SignUp(),
+        },
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true
+        ),
       ),
-      home: const MyHomePage(),
     );
   }
 }
@@ -45,9 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     Timer(const Duration(seconds: 3),
             ()=>Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) =>
-            const MainPage()
+            MaterialPageRoute(builder: (context) => const MainPage()
             )
         )
     );

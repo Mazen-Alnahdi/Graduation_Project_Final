@@ -1,72 +1,70 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gp_v2/screens/Help.dart';
 import 'package:gp_v2/screens/account.dart';
 import 'package:gp_v2/screens/history.dart';
 import 'package:gp_v2/screens/home.dart';
+import 'package:gp_v2/services/PicovoiceSetup.dart';
+import 'package:gp_v2/services/VoiceCommandService.dart';
 import 'package:gp_v2/services/autologout.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:provider/provider.dart';
+import 'package:rhino_flutter/rhino.dart';
 
 
 class DashBoard extends StatefulWidget {
   final User? user;
 
-  const DashBoard({super.key, this.user});
+  const DashBoard({Key? key, this.user}) : super(key: key);
 
   @override
   State<DashBoard> createState() => _DashBoardState();
 }
 
 class _DashBoardState extends State<DashBoard> {
+  late PicovoiceSetup picovoiceSetup;
   final AutoLogout _autoLogout = AutoLogout();
   int _currentIndex = 0;
-  stt.SpeechToText _speech = stt.SpeechToText();
 
-  void _listenForVoiceCommands() async {
-    if (await _speech.initialize()) {
-      _speech.listen(onResult: (result) {
-        _handleVoiceCommand(result.recognizedWords);
-      });
-    } else {
-      print('Failed to initialize speech recognition');
-    }
-  }
 
-  void _handleVoiceCommand(String command) {
-    setState(() {
-      if (command.toLowerCase().contains('open home')) {
-        _currentIndex = 0;
-      } else if (command.toLowerCase().contains('open accounts')) {
-        _currentIndex = 1;
-      } else if (command.toLowerCase().contains('open history')) {
-        _currentIndex = 2;
-      } else if (command.toLowerCase().contains('open help')) {
-        _currentIndex = 3;
-      }
-    });
-  }
 
   @override
   void initState() {
     super.initState();
     _autoLogout.startTimer();
-    _listenForVoiceCommands();
+    picovoiceSetup = Provider.of<PicovoiceSetup>(context, listen: false);
+    picovoiceSetup.onCommand = _handleCustomCommands;
   }
 
-  void _onItemTapped(int index) {
+  @override
+  void dispose() {
+    picovoiceSetup.onCommand = null;
+    super.dispose();
+  }
+
+  void _handleCustomCommands(RhinoInference inference) async {
     setState(() {
-      _currentIndex = index;
+      if(inference.intent! == "openHome"){
+        _currentIndex=0;
+      } else if (inference.intent! == "openAccount"){
+        _currentIndex=1;
+      } else if (inference.intent! == "openHistory"){
+        _currentIndex=2;
+      } else if (inference.intent! == "openHelp"){
+        _currentIndex=3;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // final voiceCommandService = Provider.of<VoiceCommandService>(context);
+
     final List<Widget> _pages = [
-      Home(user: widget.user), // Pass user data to Home widget
-      Accounts(user: widget.user), // Pass user data to Accounts widget
-      History(user: widget.user), // Pass user data to History widget
-      const Help()
+      Home(user: widget.user),
+      Accounts(user: widget.user),
+      History(user: widget.user),
+      const Help(),
     ];
 
     return Scaffold(
@@ -78,23 +76,7 @@ class _DashBoardState extends State<DashBoard> {
           child: _pages[_currentIndex],
         ),
       ),
-      floatingActionButton: Stack(
-        children:[
-          Positioned(
-            bottom: 0,
-            left: MediaQuery.of(context).size.width / 2 -10,
-            child: FloatingActionButton(
-            onPressed: () {
-              _startListening();
-            },child: Icon(Icons.mic),
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              hoverColor: Colors.grey,
 
-                    ),
-          ),
-        ]
-      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
         items: const <BottomNavigationBarItem>[
@@ -126,14 +108,11 @@ class _DashBoardState extends State<DashBoard> {
     );
   }
 
-  void _startListening() {
-    _speech.listen(onResult: (result) {
-      if (result.finalResult) {
-        _handleVoiceCommand(result.recognizedWords);
-      }
+
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
     });
   }
 }
-
-
-
