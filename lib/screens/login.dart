@@ -39,6 +39,7 @@ class _LoginState extends State<Login> {
     super.initState();
     picovoiceSetup = Provider.of<PicovoiceSetup>(context, listen: false);
     picovoiceSetup.onCommand = _handleCustomCommands;
+    _loadCredentials();
     //final voiceCommandService = Provider.of<VoiceCommandService>(context, listen: false);
   }
 
@@ -82,7 +83,6 @@ class _LoginState extends State<Login> {
 
   void _handleCustomCommands(RhinoInference inference) async {
     if (inference.intent! == 'enterEmail') {
-      print(inference.intent);
       await picovoiceSetup.disablePico();
       _voiceCommandService = VoiceCommandService();
       _voiceCommandService.onCommand = _enterEmail;
@@ -90,36 +90,34 @@ class _LoginState extends State<Login> {
       // await picovoiceSetup.enablePico();
     } else if (inference.intent! == 'clearEmail') {
       _emailController.text = "";
-      print(inference.intent);
+
     } else if (inference.intent! == 'EnterPhrase1') {
-      print(inference.intent);
+
 
       await picovoiceSetup.disablePico();
       _voiceCommandService = VoiceCommandService();
       _voiceCommandService.onCommand = _enterPhrase1;
     } else if (inference.intent! == 'EnterPhrase2') {
-      print(inference.intent);
+
 
       await picovoiceSetup.disablePico();
       _voiceCommandService = VoiceCommandService();
       _voiceCommandService.onCommand = _enterPhrase2;
     } else if (inference.intent! == 'login') {
-      print(inference.intent);
 
-      if(_passwordController.text==null){
-      _passwordController.text =
-          _phrase1Controller.text.trim() + _phrase2Controller.text.trim();
+      if (_phrase1Controller.text.isNotEmpty&&_phrase2Controller.text.isNotEmpty){
+      _passwordController.text = _phrase1Controller.text.trim() + _phrase2Controller.text.trim();
       }
       signIn();
     } else if (inference.intent! == 'endApp') {
       print(inference.intent);
     } else if (inference.intent! == 'openSignUp') {
-      print(inference.intent);
-
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => SignUp()));
-    } else {
-      print(inference.intent);
+    } else if (inference.intent == 'clearPhrase1') {
+      _phrase1Controller.text="";
+    } else if(inference.intent == "clearPhrase2") {
+      _phrase2Controller.text="";
     }
   }
 
@@ -159,7 +157,7 @@ class _LoginState extends State<Login> {
     final picovoicesetup = Provider.of<PicovoiceSetup>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF69F0E0),
+      backgroundColor: const Color(0xFF0575A5),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -171,10 +169,13 @@ class _LoginState extends State<Login> {
                 width: 300,
                 child: TextField(
                   controller: _emailController,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Email',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelStyle: TextStyle(color: Colors.white),
+
                   ),
                 ),
               ),
@@ -184,11 +185,13 @@ class _LoginState extends State<Login> {
                 // password textfield
                 child: TextField(
                   controller: _passwordController,
+                  style: TextStyle(color: Colors.white),
                   obscureText: true,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Password',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelStyle: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -198,11 +201,13 @@ class _LoginState extends State<Login> {
                 // Phrase 1 textfield
                 child: TextField(
                   controller: _phrase1Controller,
+                  style: TextStyle(color: Colors.white),
                   obscureText: true,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Hint for Phrase 1: $phrasehint1',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelStyle: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -212,11 +217,13 @@ class _LoginState extends State<Login> {
                 // password textfield
                 child: TextField(
                   controller: _phrase2Controller,
+                  style: TextStyle(color: Colors.white),
                   obscureText: true,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Hint for Phrase 2: $phrasehint2',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelStyle: TextStyle(color: Colors.white),
                   ),
                 ),
               ),

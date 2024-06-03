@@ -22,6 +22,8 @@ class _profilePageState extends State<profilePage> {
   final _newPasswordController=TextEditingController();
   final _confPasswordController=TextEditingController();
 
+  final _phraseold1Controller=TextEditingController();
+  final _phraseold2Controller=TextEditingController();
   final _phrasehint1Controller=TextEditingController();
   final _phrasehint2Controller=TextEditingController();
   final _phrasetext1Controller=TextEditingController();
@@ -31,6 +33,8 @@ class _profilePageState extends State<profilePage> {
   bool _validateNewPass=false;
   bool _validateConfPass=false;
 
+  bool _validatephraseold1=false;
+  bool _validatephraseold2=false;
   bool _validatephrasehint1=false;
   bool _validatephrasehint2=false;
   bool _validatephrasetext1=false;
@@ -121,7 +125,7 @@ class _profilePageState extends State<profilePage> {
         home: Scaffold(
           appBar: AppBar(
             toolbarHeight: 100,
-            backgroundColor: Colors.black54,
+            backgroundColor: Color(0xFF0575A5),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -139,14 +143,13 @@ class _profilePageState extends State<profilePage> {
                         .of(context)
                         .size
                         .width * .5),
-
                   ],
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: const Text(
                     'Account Settings',
-                    style: TextStyle(fontSize: 50, color: Colors.white),
+                    style: TextStyle(fontSize: 40, color: Colors.white),
                   ),
                 ),
               ],
@@ -193,6 +196,21 @@ class _profilePageState extends State<profilePage> {
                             border: InputBorder.none,
                             errorText: _validateOldPass? 'This Field cannot be empty' : null,
                             ),
+                        scrollPadding: EdgeInsets.all(10.0),
+                        autofocus: false,
+                        textInputAction: TextInputAction.next,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child:  TextField(
+                        controller: _oldPasswordController,
+                        decoration: InputDecoration(
+                          label: Text("Current Phrase 1: "),
+                          hintText: "Enter your Old First Phrase: ",
+                          border: InputBorder.none,
+                          errorText: _validateOldPass? 'This Field cannot be empty' : null,
+                        ),
                         scrollPadding: EdgeInsets.all(10.0),
                         autofocus: false,
                         textInputAction: TextInputAction.next,

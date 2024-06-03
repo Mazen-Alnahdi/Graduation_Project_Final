@@ -50,7 +50,7 @@ class SignupState extends State<SignUp> {
     return '${directory.path}/credentials.txt';
   }
 
-  Future<void> _saveCredentials( String Phrase1, String Phrase2) async {
+  Future<void> _saveCredentials(String Phrase1, String Phrase2) async {
     final file = File(await _getFilePath());
     await file.writeAsString('$Phrase1\n$Phrase2');
   }

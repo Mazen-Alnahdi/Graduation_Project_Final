@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
       home: Scaffold(
         appBar: AppBar(
           toolbarHeight: 100,
-          backgroundColor: Colors.black54,
+          backgroundColor: Color(0xFF0575A5),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -126,7 +126,7 @@ class _HomeState extends State<Home> {
                               CardWidget(icon: Icons.account_balance_rounded, title: '12650', content: "Primary Account"),
                               ..._Carddocuments.map((cardDocument) {
                                 return Card(
-                                  color: Colors.black45,
+                                  color: Color(0xFF0575A5),
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 70, top: 10, bottom: 10, left: 10),
                                     child: Column(
@@ -291,7 +291,7 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.black45,
+      color: Color(0xFF0575A5),
       // margin: EdgeInsets.all(20),
       child: Padding(
         padding: const EdgeInsets.only(right: 70,top: 10,bottom: 10,left: 10),

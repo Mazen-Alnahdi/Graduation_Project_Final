@@ -1,14 +1,7 @@
-
-
-
-
-
-
-
 import 'dart:async';
-
+import 'package:rename/rename.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dcdg/dcdg.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gp_v2/screens/Help.dart';
 import 'package:gp_v2/screens/account.dart';
@@ -72,7 +65,7 @@ class MyApp extends StatelessWidget {
           '/signup':(context) => SignUp(),
         },
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true
         ),
       ),
@@ -101,14 +94,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Color(0xFF0575A5),
       child: Center(
         child: SizedBox(
           width: 512,
           height: 512,
           child: Image.asset(
             'assets/logo.png', // Specify the file path to the image
-            fit: BoxFit.contain, // Adjust the image to contain within the specified size
+            fit: BoxFit.contain,
+
           ),
         ),
       ),

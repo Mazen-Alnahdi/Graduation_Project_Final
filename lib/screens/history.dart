@@ -101,7 +101,7 @@ class _HistoryState extends State<History> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF0575A5),
         toolbarHeight: 100,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
