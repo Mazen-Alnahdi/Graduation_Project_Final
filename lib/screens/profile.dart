@@ -1,3 +1,4 @@
+import 'package:MyBank/services/VoiceCommandService.dart';
 import 'package:flutter/material.dart';
 import 'package:MyBank/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,8 @@ class profilePage extends StatefulWidget {
 class _profilePageState extends State<profilePage> {
   final ScrollController _scrollController=ScrollController();
   late PicovoiceSetup picovoiceSetup;
+  late VoiceCommandService _voiceCommandService;
+  int position=0;
 
   final _oldPasswordController=TextEditingController();
   final _newPasswordController=TextEditingController();
@@ -41,6 +44,7 @@ class _profilePageState extends State<profilePage> {
   bool _validatephrasetext2=false;
 
   String _message="";
+  String word="";
 
   Future<String> changePassword(String email,String oldPass, String newPass, String confPass) async {
     _message= await fireStoreService.changePassword(
@@ -91,13 +95,72 @@ class _profilePageState extends State<profilePage> {
      super.dispose();
   }
 
+  void _enterText(String text) async {
+    switch(position){
+      case 0:{
+        _phraseold1Controller.text=_phraseold1Controller.text+text;
+        await picovoiceSetup.enablePico();
+        word = _phraseold1Controller.text.replaceAll(" ", "");
+        _phraseold1Controller.text=word;
+        break;
+      }
+      case 1: {
+        _phrasetext2Controller.text=_phrasetext2Controller.text+text;
+        await picovoiceSetup.enablePico();
+        word = _phrasetext2Controller.text.replaceAll(" ", "");
+        _phrasetext2Controller.text=word;
+        break;
+      }
+      case 2: {
+        _phrasetext2Controller.text=_phrasetext2Controller.text+text;
+        await picovoiceSetup.enablePico();
+        word = _phrasetext2Controller.text.replaceAll(" ", "");
+        _phrasetext2Controller.text=word;
+        break;
+      }
+      case 3: {
+        _phraseold1Controller.text=_phraseold1Controller.text+text;
+        await picovoiceSetup.enablePico();
+        word = _phraseold1Controller.text.replaceAll(" ", "");
+        _phraseold1Controller.text=word;
+        break;
+      }
+    }
+  }
+
   void _handleCustomCommands (RhinoInference inference) async {
     if(inference.intent == "scrollUp"){
       _scrollUp();
     } else if (inference.intent == "scrollDown") {
       _scrollDown();
     } else if (inference.intent == "enterPhrase1"){
-
+      position=2;
+      await picovoiceSetup.disablePico();
+      _voiceCommandService = VoiceCommandService();
+      _voiceCommandService.onCommand = _enterText;
+    } else if (inference.intent == "enterPhrase2"){
+      position=3;
+      await picovoiceSetup.disablePico();
+      _voiceCommandService = VoiceCommandService();
+      _voiceCommandService.onCommand = _enterText;
+    } else if (inference.intent == "enterOldPhrase1"){
+      position=0;
+      await picovoiceSetup.disablePico();
+      _voiceCommandService = VoiceCommandService();
+      _voiceCommandService.onCommand = _enterText;
+    } else if(inference.intent == "enterOldPhrase2"){
+      position=1;
+      await picovoiceSetup.disablePico();
+      _voiceCommandService = VoiceCommandService();
+      _voiceCommandService.onCommand = _enterText;
+    } else if(inference.intent == "clearPhrase1"){
+      _phrasetext1Controller.text="";
+    } else if(inference.intent == "clearPhrase2") {
+      _phrasetext2Controller.text="";
+    } else if (inference.intent == "clearOldPhrase1"){
+      _phraseold1Controller.text="";
+    } else if(inference.intent == "clearOldPhrase2"){
+      _phraseold2Controller.text="";
     }
   }
 
@@ -186,6 +249,7 @@ class _profilePageState extends State<profilePage> {
               if (_isVisiblePass)
                 Column(
                   children: [
+
                     Container(
                       padding: const EdgeInsets.all(10),
                       child:  TextField(
@@ -197,25 +261,12 @@ class _profilePageState extends State<profilePage> {
                             errorText: _validateOldPass? 'This Field cannot be empty' : null,
                             ),
                         scrollPadding: EdgeInsets.all(10.0),
+                        obscureText: true,
                         autofocus: false,
                         textInputAction: TextInputAction.next,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child:  TextField(
-                        controller: _oldPasswordController,
-                        decoration: InputDecoration(
-                          label: Text("Current Phrase 1: "),
-                          hintText: "Enter your Old First Phrase: ",
-                          border: InputBorder.none,
-                          errorText: _validateOldPass? 'This Field cannot be empty' : null,
-                        ),
-                        scrollPadding: EdgeInsets.all(10.0),
-                        autofocus: false,
-                        textInputAction: TextInputAction.next,
-                      ),
-                    ),
+
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
@@ -227,23 +278,95 @@ class _profilePageState extends State<profilePage> {
                             border: InputBorder.none),
                         scrollPadding: EdgeInsets.all(10.0),
                         autofocus: false,
+                        obscureText: true,
                         textInputAction: TextInputAction.next,
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
-                        controller: _confPasswordController,
+                        controller:  _confPasswordController,
                         decoration: InputDecoration(
-                          errorText: _validateConfPass? 'This Field cannot be empty' : null ,
                             label: Text("Confirm Password: "),
-                            hintText: "Confirm your New Password: ",
+                            errorText: _validateConfPass? 'This Field cannot be empty' : null,
+                            hintText: "Enter your New Password: ",
                             border: InputBorder.none),
                         scrollPadding: EdgeInsets.all(10.0),
                         autofocus: false,
-                        textInputAction: TextInputAction.done,
+                        obscureText: true,
+                        textInputAction: TextInputAction.next,
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text("If you have used phrases as a password, leave the previous fields as blanks and enter your old and new phrases below",
+                        style: TextStyle(
+                            fontSize: 15
+                        ),),
+                    ),
+
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child:  TextField(
+                        controller: _phraseold1Controller,
+                        decoration: InputDecoration(
+                          label: Text("Current Phrase 1: "),
+                          hintText: "Enter your Old First Phrase: ",
+                          border: InputBorder.none,
+                          errorText: _validatephraseold1? 'This Field cannot be empty' : null,
+                        ),
+                        scrollPadding: EdgeInsets.all(10.0),
+                        autofocus: false,
+                        textInputAction: TextInputAction.next,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child:  TextField(
+                        controller: _phraseold2Controller,
+                        decoration: InputDecoration(
+                          label: Text("Current Phrase 2: "),
+                          hintText: "Enter your Old Second Phrase: ",
+                          border: InputBorder.none,
+                          errorText: _validatephraseold2? 'This Field cannot be empty' : null,
+                        ),
+                        scrollPadding: EdgeInsets.all(10.0),
+                        autofocus: false,
+                        textInputAction: TextInputAction.next,
+                      ),
+                    ),
+
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child:  TextField(
+                        controller: _phrasetext1Controller,
+                        decoration: InputDecoration(
+                          label: Text("New Phrase 1: "),
+                          hintText: "Enter your New First Phrase: ",
+                          border: InputBorder.none,
+                          errorText: _validatephrasetext1? 'This Field cannot be empty' : null,
+                        ),
+                        scrollPadding: EdgeInsets.all(10.0),
+                        autofocus: false,
+                        textInputAction: TextInputAction.next,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child:  TextField(
+                        controller: _phrasetext2Controller,
+                        decoration: InputDecoration(
+                          label: Text("New Phrase 2: "),
+                          hintText: "Enter your New Second Phrase: ",
+                          border: InputBorder.none,
+                          errorText: _validatephrasetext2? 'This Field cannot be empty' : null,
+                        ),
+                        scrollPadding: EdgeInsets.all(10.0),
+                        autofocus: false,
+                        textInputAction: TextInputAction.next,
+                      ),
+                    ),
+
                     Row(
                       children: [
                         ElevatedButton(
@@ -251,12 +374,32 @@ class _profilePageState extends State<profilePage> {
                             onPressed: () async {
 
                               setState(() {
-                                _oldPasswordController.text.isEmpty ? _validateOldPass = true: _validateOldPass=false;
-                                _newPasswordController.text.isEmpty ? _validateNewPass = true: _validateNewPass=false;
-                                _confPasswordController.text.isEmpty ? _validateConfPass=true: _validateOldPass= false;
+
+                                if (_oldPasswordController.text.isEmpty &&_newPasswordController.text.isEmpty &&_confPasswordController.text.isEmpty) {
+                                  _phraseold1Controller.text.isEmpty? _validatephraseold1=true :_validatephraseold1=false;
+                                  _phraseold2Controller.text.isEmpty? _validatephraseold2=true:_validatephraseold2=false;
+                                  _phrasetext1Controller.text.isEmpty? _validatephrasetext1=true:_validatephrasetext1=false;
+                                  _phrasetext2Controller.text.isEmpty? _validatephrasetext2=true: _validatephrasetext2=false;
+                                } else {
+                                  _oldPasswordController.text.isEmpty ? _validateOldPass = true: _validateOldPass=false;
+                                  _newPasswordController.text.isEmpty ? _validateNewPass = true: _validateNewPass=false;
+                                  _confPasswordController.text.isEmpty ? _validateConfPass=true: _validateOldPass= false;
+                                }
+
+
                               });
-                              if (_validateNewPass==false && _validateNewPass==false && _validateConfPass==false){
+                              if ((_validateNewPass==false && _validateNewPass==false && _validateConfPass==false)||
+                                  _validatephraseold1==false&& _validatephraseold2==false && _validatephrasetext1==false && _validatephrasetext2==false){
+
                                 if(_newPasswordController.text==_confPasswordController.text){
+                                  _message = await fireStoreService.changePassword(
+                                      email: widget.user!.email,
+                                      currentPassword: _oldPasswordController.text,
+                                      newPassword: _newPasswordController.text);
+                                } else {
+                                  _newPasswordController.text=_phraseold1Controller.text+_phraseold2Controller.text;
+                                  _confPasswordController.text=_phrasetext1Controller.text+_phrasetext2Controller.text;
+
                                   _message = await fireStoreService.changePassword(
                                       email: widget.user!.email,
                                       currentPassword: _oldPasswordController.text,
