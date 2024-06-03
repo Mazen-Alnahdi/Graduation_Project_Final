@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gp_v2/services/PicovoiceSetup.dart';
+import 'package:MyBank/services/PicovoiceSetup.dart';
 import 'package:provider/provider.dart';
 import 'package:rhino_flutter/rhino.dart';
 

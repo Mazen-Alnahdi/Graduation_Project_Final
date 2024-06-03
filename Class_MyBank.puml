@@ -1,34 +1,34 @@
 @startuml
 set namespaceSeparator ::
 
-class "gp_v2::main.dart::MyApp" {
+class "MyBank::main.dart::MyApp" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "gp_v2::main.dart::MyApp"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "MyBank::main.dart::MyApp"
 
-class "gp_v2::main.dart::MyHomePage" {
+class "MyBank::main.dart::MyHomePage" {
   +State<MyHomePage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::main.dart::MyHomePage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::main.dart::MyHomePage"
 
-class "gp_v2::main.dart::_MyHomePageState" {
+class "MyBank::main.dart::_MyHomePageState" {
   +void initState()
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::main.dart::_MyHomePageState"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::main.dart::_MyHomePageState"
 
-class "gp_v2::screens::account.dart::Accounts" {
+class "MyBank::screens::account.dart::Accounts" {
   +User? user
   +State<Accounts> createState()
 }
 
-"gp_v2::screens::account.dart::Accounts" o-- "firebase_auth::firebase_auth.dart::User"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::account.dart::Accounts"
+"MyBank::screens::account.dart::Accounts" o-- "firebase_auth::firebase_auth.dart::User"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::account.dart::Accounts"
 
-class "gp_v2::screens::account.dart::_AccountsState" {
+class "MyBank::screens::account.dart::_AccountsState" {
   -List<Map<String, dynamic>> _Carddocuments
   +FireStoreService fireStoreService
   -dynamic _fetchCards()
@@ -36,10 +36,10 @@ class "gp_v2::screens::account.dart::_AccountsState" {
   +Widget build()
 }
 
-"gp_v2::screens::account.dart::_AccountsState" o-- "gp_v2::services::firestore.dart::FireStoreService"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::account.dart::_AccountsState"
+"MyBank::screens::account.dart::_AccountsState" o-- "MyBank::services::firestore.dart::FireStoreService"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::account.dart::_AccountsState"
 
-class "gp_v2::screens::account.dart::accountCard" {
+class "MyBank::screens::account.dart::accountCard" {
   +String text
   +String accNum
   +String date
@@ -47,17 +47,17 @@ class "gp_v2::screens::account.dart::accountCard" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "gp_v2::screens::account.dart::accountCard"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "MyBank::screens::account.dart::accountCard"
 
-class "gp_v2::screens::dashboard.dart::DashBoard" {
+class "MyBank::screens::dashboard.dart::DashBoard" {
   +User? user
   +State<DashBoard> createState()
 }
 
-"gp_v2::screens::dashboard.dart::DashBoard" o-- "firebase_auth::firebase_auth.dart::User"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::dashboard.dart::DashBoard"
+"MyBank::screens::dashboard.dart::DashBoard" o-- "firebase_auth::firebase_auth.dart::User"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::dashboard.dart::DashBoard"
 
-class "gp_v2::screens::dashboard.dart::_DashBoardState" {
+class "MyBank::screens::dashboard.dart::_DashBoardState" {
   +PicovoiceSetup picovoiceSetup
   -AutoLogout _autoLogout
   -int _currentIndex
@@ -68,17 +68,17 @@ class "gp_v2::screens::dashboard.dart::_DashBoardState" {
   -void _onItemTapped()
 }
 
-"gp_v2::screens::dashboard.dart::_DashBoardState" o-- "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup"
-"gp_v2::screens::dashboard.dart::_DashBoardState" o-- "gp_v2::services::autologout.dart::AutoLogout"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::dashboard.dart::_DashBoardState"
+"MyBank::screens::dashboard.dart::_DashBoardState" o-- "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup"
+"MyBank::screens::dashboard.dart::_DashBoardState" o-- "MyBank::services::autologout.dart::AutoLogout"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::dashboard.dart::_DashBoardState"
 
-class "gp_v2::screens::help.dart::Help" {
+class "MyBank::screens::help.dart::Help" {
   +State<Help> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::help.dart::Help"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::help.dart::Help"
 
-class "gp_v2::screens::help.dart::_HelpState" {
+class "MyBank::screens::help.dart::_HelpState" {
   -ScrollController _scrollController
   +PicovoiceSetup picovoiceSetup
   +void initState()
@@ -89,27 +89,27 @@ class "gp_v2::screens::help.dart::_HelpState" {
   +Widget build()
 }
 
-"gp_v2::screens::help.dart::_HelpState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
-"gp_v2::screens::help.dart::_HelpState" o-- "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::help.dart::_HelpState"
+"MyBank::screens::help.dart::_HelpState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
+"MyBank::screens::help.dart::_HelpState" o-- "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::help.dart::_HelpState"
 
-class "gp_v2::screens::help.dart::HelpBox" {
+class "MyBank::screens::help.dart::HelpBox" {
   +String headline
   +String content
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "gp_v2::screens::help.dart::HelpBox"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "MyBank::screens::help.dart::HelpBox"
 
-class "gp_v2::screens::history.dart::History" {
+class "MyBank::screens::history.dart::History" {
   +User? user
   +State<History> createState()
 }
 
-"gp_v2::screens::history.dart::History" o-- "firebase_auth::firebase_auth.dart::User"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::history.dart::History"
+"MyBank::screens::history.dart::History" o-- "firebase_auth::firebase_auth.dart::User"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::history.dart::History"
 
-class "gp_v2::screens::history.dart::_HistoryState" {
+class "MyBank::screens::history.dart::_HistoryState" {
   -List<Map<String, dynamic>> _transactions
   +FireStoreService fireStoreService
   -bool _showDebitTransactions
@@ -122,19 +122,19 @@ class "gp_v2::screens::history.dart::_HistoryState" {
   +Widget build()
 }
 
-"gp_v2::screens::history.dart::_HistoryState" o-- "gp_v2::services::firestore.dart::FireStoreService"
-"gp_v2::screens::history.dart::_HistoryState" o-- "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::history.dart::_HistoryState"
+"MyBank::screens::history.dart::_HistoryState" o-- "MyBank::services::firestore.dart::FireStoreService"
+"MyBank::screens::history.dart::_HistoryState" o-- "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::history.dart::_HistoryState"
 
-class "gp_v2::screens::home.dart::Home" {
+class "MyBank::screens::home.dart::Home" {
   +User? user
   +State<Home> createState()
 }
 
-"gp_v2::screens::home.dart::Home" o-- "firebase_auth::firebase_auth.dart::User"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::home.dart::Home"
+"MyBank::screens::home.dart::Home" o-- "firebase_auth::firebase_auth.dart::User"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::home.dart::Home"
 
-class "gp_v2::screens::home.dart::_HomeState" {
+class "MyBank::screens::home.dart::_HomeState" {
   -List<Map<String, dynamic>> _Carddocuments
   -List<Map<String, dynamic>> _Transdocuments
   +FireStoreService fireStoreService
@@ -144,20 +144,20 @@ class "gp_v2::screens::home.dart::_HomeState" {
   +Widget build()
 }
 
-"gp_v2::screens::home.dart::_HomeState" o-- "gp_v2::services::firestore.dart::FireStoreService"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::home.dart::_HomeState"
+"MyBank::screens::home.dart::_HomeState" o-- "MyBank::services::firestore.dart::FireStoreService"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::home.dart::_HomeState"
 
-class "gp_v2::screens::home.dart::CardWidget" {
+class "MyBank::screens::home.dart::CardWidget" {
   +IconData icon
   +String title
   +String content
   +Widget build()
 }
 
-"gp_v2::screens::home.dart::CardWidget" o-- "flutter::src::widgets::icon_data.dart::IconData"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "gp_v2::screens::home.dart::CardWidget"
+"MyBank::screens::home.dart::CardWidget" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "MyBank::screens::home.dart::CardWidget"
 
-class "gp_v2::screens::home.dart::CardTrans" {
+class "MyBank::screens::home.dart::CardTrans" {
   +String text
   +String accNum
   +String date
@@ -166,15 +166,15 @@ class "gp_v2::screens::home.dart::CardTrans" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "gp_v2::screens::home.dart::CardTrans"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "MyBank::screens::home.dart::CardTrans"
 
-class "gp_v2::screens::login.dart::Login" {
+class "MyBank::screens::login.dart::Login" {
   +State<Login> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::login.dart::Login"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::login.dart::Login"
 
-class "gp_v2::screens::login.dart::_LoginState" {
+class "MyBank::screens::login.dart::_LoginState" {
   -TextEditingController _emailController
   -TextEditingController _passwordController
   -TextEditingController _phrase1Controller
@@ -195,32 +195,32 @@ class "gp_v2::screens::login.dart::_LoginState" {
   +Widget build()
 }
 
-"gp_v2::screens::login.dart::_LoginState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"gp_v2::screens::login.dart::_LoginState" o-- "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup"
-"gp_v2::screens::login.dart::_LoginState" o-- "gp_v2::services::VoiceCommandService.dart::VoiceCommandService"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::login.dart::_LoginState"
+"MyBank::screens::login.dart::_LoginState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"MyBank::screens::login.dart::_LoginState" o-- "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup"
+"MyBank::screens::login.dart::_LoginState" o-- "MyBank::services::VoiceCommandService.dart::VoiceCommandService"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::login.dart::_LoginState"
 
-class "gp_v2::screens::main_page.dart::MainPage" {
+class "MyBank::screens::main_page.dart::MainPage" {
   +State<MainPage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::main_page.dart::MainPage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::main_page.dart::MainPage"
 
-class "gp_v2::screens::main_page.dart::_MainPageState" {
+class "MyBank::screens::main_page.dart::_MainPageState" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::main_page.dart::_MainPageState"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::main_page.dart::_MainPageState"
 
-class "gp_v2::screens::profile.dart::profilePage" {
+class "MyBank::screens::profile.dart::profilePage" {
   +User? user
   +State<profilePage> createState()
 }
 
-"gp_v2::screens::profile.dart::profilePage" o-- "firebase_auth::firebase_auth.dart::User"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::profile.dart::profilePage"
+"MyBank::screens::profile.dart::profilePage" o-- "firebase_auth::firebase_auth.dart::User"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::profile.dart::profilePage"
 
-class "gp_v2::screens::profile.dart::_profilePageState" {
+class "MyBank::screens::profile.dart::_profilePageState" {
   -ScrollController _scrollController
   +PicovoiceSetup picovoiceSetup
   -TextEditingController _oldPasswordController
@@ -256,27 +256,27 @@ class "gp_v2::screens::profile.dart::_profilePageState" {
   +Widget build()
 }
 
-"gp_v2::screens::profile.dart::_profilePageState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
-"gp_v2::screens::profile.dart::_profilePageState" o-- "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup"
-"gp_v2::screens::profile.dart::_profilePageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"gp_v2::screens::profile.dart::_profilePageState" o-- "gp_v2::services::firestore.dart::FireStoreService"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::profile.dart::_profilePageState"
+"MyBank::screens::profile.dart::_profilePageState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
+"MyBank::screens::profile.dart::_profilePageState" o-- "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup"
+"MyBank::screens::profile.dart::_profilePageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"MyBank::screens::profile.dart::_profilePageState" o-- "MyBank::services::firestore.dart::FireStoreService"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::profile.dart::_profilePageState"
 
-class "gp_v2::screens::profile.dart::ContentWidget" {
+class "MyBank::screens::profile.dart::ContentWidget" {
   +String title
   +String content
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "gp_v2::screens::profile.dart::ContentWidget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "MyBank::screens::profile.dart::ContentWidget"
 
-class "gp_v2::screens::signup.dart::SignUp" {
+class "MyBank::screens::signup.dart::SignUp" {
   +State<StatefulWidget> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "gp_v2::screens::signup.dart::SignUp"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "MyBank::screens::signup.dart::SignUp"
 
-class "gp_v2::screens::signup.dart::SignupState" {
+class "MyBank::screens::signup.dart::SignupState" {
   -TextEditingController _accNumtext
   -TextEditingController _emailtext
   -TextEditingController _passwordtext
@@ -307,21 +307,21 @@ class "gp_v2::screens::signup.dart::SignupState" {
   +Widget build()
 }
 
-"gp_v2::screens::signup.dart::SignupState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"gp_v2::screens::signup.dart::SignupState" o-- "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup"
-"gp_v2::screens::signup.dart::SignupState" o-- "gp_v2::services::VoiceCommandService.dart::VoiceCommandService"
-"flutter::src::widgets::framework.dart::State" <|-- "gp_v2::screens::signup.dart::SignupState"
+"MyBank::screens::signup.dart::SignupState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"MyBank::screens::signup.dart::SignupState" o-- "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup"
+"MyBank::screens::signup.dart::SignupState" o-- "MyBank::services::VoiceCommandService.dart::VoiceCommandService"
+"flutter::src::widgets::framework.dart::State" <|-- "MyBank::screens::signup.dart::SignupState"
 
-class "gp_v2::services::autologout.dart::AutoLogout" {
+class "MyBank::services::autologout.dart::AutoLogout" {
   -Timer? _timer
   -Duration _inactivityDuration
   +void startTimer()
   +void resetTimer()
 }
 
-"gp_v2::services::autologout.dart::AutoLogout" o-- "dart::async::Timer"
+"MyBank::services::autologout.dart::AutoLogout" o-- "dart::async::Timer"
 
-class "gp_v2::services::firestore.dart::FireStoreService" {
+class "MyBank::services::firestore.dart::FireStoreService" {
   +dynamic getCardList()
   +dynamic getUserData()
   +dynamic getTransactionList()
@@ -332,7 +332,7 @@ class "gp_v2::services::firestore.dart::FireStoreService" {
   +dynamic getCardID()
 }
 
-class "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup" {
+class "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup" {
   +String accessKey
   -String _errorMessage
   -PicovoiceManager? _picovoiceManager
@@ -346,11 +346,11 @@ class "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup" {
   +dynamic enablePico()
 }
 
-"gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup" o-- "picovoice_flutter::picovoice_manager.dart::PicovoiceManager"
-"gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup" o-- "null::dynamic Function(RhinoInference)"
-"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "gp_v2::services::PicovoiceSetup.dart::PicovoiceSetup"
+"MyBank::services::PicovoiceSetup.dart::PicovoiceSetup" o-- "picovoice_flutter::picovoice_manager.dart::PicovoiceManager"
+"MyBank::services::PicovoiceSetup.dart::PicovoiceSetup" o-- "null::dynamic Function(RhinoInference)"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "MyBank::services::PicovoiceSetup.dart::PicovoiceSetup"
 
-class "gp_v2::services::VoiceCommandService.dart::VoiceCommandService" {
+class "MyBank::services::VoiceCommandService.dart::VoiceCommandService" {
   -SpeechToText _speech
   -bool _isListening
   -String _text
@@ -364,8 +364,8 @@ class "gp_v2::services::VoiceCommandService.dart::VoiceCommandService" {
   +void handleCommand()
 }
 
-"gp_v2::services::VoiceCommandService.dart::VoiceCommandService" o-- "speech_to_text::speech_to_text.dart::SpeechToText"
-"gp_v2::services::VoiceCommandService.dart::VoiceCommandService" o-- "null::dynamic Function(String)"
+"MyBank::services::VoiceCommandService.dart::VoiceCommandService" o-- "speech_to_text::speech_to_text.dart::SpeechToText"
+"MyBank::services::VoiceCommandService.dart::VoiceCommandService" o-- "null::dynamic Function(String)"
 
 
 @enduml

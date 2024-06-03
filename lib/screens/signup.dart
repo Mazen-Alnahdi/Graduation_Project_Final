@@ -2,9 +2,9 @@ import 'dart:io';
 
 
 import 'package:flutter/material.dart';
-import 'package:gp_v2/services/PicovoiceSetup.dart';
-import 'package:gp_v2/services/VoiceCommandService.dart';
-import 'package:gp_v2/services/firestore.dart';
+import 'package:MyBank/services/PicovoiceSetup.dart';
+import 'package:MyBank/services/VoiceCommandService.dart';
+import 'package:MyBank/services/firestore.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:rhino_flutter/rhino.dart';

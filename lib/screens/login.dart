@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gp_v2/screens/signup.dart';
-import 'package:gp_v2/services/PicovoiceSetup.dart';
+import 'package:MyBank/screens/signup.dart';
+import 'package:MyBank/services/PicovoiceSetup.dart';
 
-import 'package:gp_v2/services/VoiceCommandService.dart';
+import 'package:MyBank/services/VoiceCommandService.dart';
 
 //file management
 import 'package:path_provider/path_provider.dart';

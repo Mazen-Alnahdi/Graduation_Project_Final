@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gp_v2/services/PicovoiceSetup.dart';
+import 'package:MyBank/services/PicovoiceSetup.dart';
 import 'package:picovoice_flutter/picovoice.dart';
 import 'package:rhino_flutter/rhino.dart';
 import 'package:picovoice_flutter/picovoice_manager.dart';

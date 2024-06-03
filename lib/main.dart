@@ -3,22 +3,22 @@ import 'package:rename/rename.dart';
 import 'package:flutter/material.dart';
 import 'package:dcdg/dcdg.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gp_v2/screens/Help.dart';
-import 'package:gp_v2/screens/account.dart';
-import 'package:gp_v2/screens/dashboard.dart';
-import 'package:gp_v2/screens/history.dart';
-import 'package:gp_v2/screens/home.dart';
-import 'package:gp_v2/screens/login.dart';
-import 'package:gp_v2/screens/profile.dart';
-import 'package:gp_v2/screens/signup.dart';
-import 'package:gp_v2/services/PicovoiceSetup.dart';
+import 'package:MyBank/screens/Help.dart';
+import 'package:MyBank/screens/account.dart';
+import 'package:MyBank/screens/dashboard.dart';
+import 'package:MyBank/screens/history.dart';
+import 'package:MyBank/screens/home.dart';
+import 'package:MyBank/screens/login.dart';
+import 'package:MyBank/screens/profile.dart';
+import 'package:MyBank/screens/signup.dart';
+import 'package:MyBank/services/PicovoiceSetup.dart';
 
 import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-import 'package:gp_v2/screens/main_page.dart';
+import 'package:MyBank/screens/main_page.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();

@@ -11,7 +11,7 @@
         </intent>
     </queries>
     <application
-        android:label="gp_v2"
+        android:label="MyBank"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

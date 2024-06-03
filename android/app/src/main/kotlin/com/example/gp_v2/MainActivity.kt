@@ -1,4 +1,4 @@
-package com.example.gp_v2
+package com.example.MyBank
 
 import io.flutter.embedding.android.FlutterActivity
 

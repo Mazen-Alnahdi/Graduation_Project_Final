@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gp_v2/screens/Help.dart';
-import 'package:gp_v2/screens/account.dart';
-import 'package:gp_v2/screens/history.dart';
-import 'package:gp_v2/screens/home.dart';
-import 'package:gp_v2/services/PicovoiceSetup.dart';
-import 'package:gp_v2/services/VoiceCommandService.dart';
-import 'package:gp_v2/services/autologout.dart';
+import 'package:MyBank/screens/Help.dart';
+import 'package:MyBank/screens/account.dart';
+import 'package:MyBank/screens/history.dart';
+import 'package:MyBank/screens/home.dart';
+import 'package:MyBank/services/PicovoiceSetup.dart';
+import 'package:MyBank/services/VoiceCommandService.dart';
+import 'package:MyBank/services/autologout.dart';
 import 'package:provider/provider.dart';
 import 'package:rhino_flutter/rhino.dart';
 

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gp_v2/screens/dashboard.dart';
-import 'package:gp_v2/screens/home.dart';
+import 'package:MyBank/screens/dashboard.dart';
+import 'package:MyBank/screens/home.dart';
 import 'login.dart';
 
 class MainPage extends StatefulWidget {

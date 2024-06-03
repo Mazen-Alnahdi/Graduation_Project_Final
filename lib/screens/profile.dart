@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gp_v2/screens/dashboard.dart';
+import 'package:MyBank/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gp_v2/services/PicovoiceSetup.dart';
-import 'package:gp_v2/services/firestore.dart';
+import 'package:MyBank/services/PicovoiceSetup.dart';
+import 'package:MyBank/services/firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:rhino_flutter/rhino.dart';
 
